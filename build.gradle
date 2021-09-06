@@ -1,0 +1,64 @@
+buildscript {
+    // ext - build.gracle 에서 사용하는 전역변수를 설정하겠다라는 의미
+    ext {
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    // spring-boot-gracle-plugin 라는 스프링부트 그레이들 플러그인의 2.1.7.RELEASE를 의존성으로 받겠다라는 의미
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+// 앞서 선언한 의존성들을 적용할 것인지를 결정하는 코드
+// 아래 4개의 플러그인은 자바와 스프링 부트를 사용하기 위해서는 필수 플러그인들. 항상 추가하면 됨.
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'  // 스프링부트의 의존성들을 관리해주는 플러그인. 꼭 추가해야만 함
+
+group 'com.jerry'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+// repositories - 각종 의존성 (라이브러리)들을 어떤 원격 저장소에서 받을지 정함.
+// 기본적으로 mavenCentral을 많이 사용하지만, 최근에는 라이브러리 업로드 난이도 때문에 jcenter 도 많이 사용.
+repositories {
+    mavenCentral()
+}
+
+
+// 프로젝트 개발에 필요한 의존성들을 선언하는 곳
+// 특정버전을 명시하지 않아야만 맨위에 작성한 ${springBootVersion} 의 버전을 따라가게됨.
+// 라이브러리들의 버전관리가 한곳에 집중됨
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+
+
+/** 아래는 프로젝트 생성시 기본적으로 나오는 설정내용들. */
+//plugins {
+//    id 'java'
+//}
+//
+//group 'com.jerry'
+//version '1.0-SNAPSHOT'
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+//}
+//
+//test {
+//    useJUnitPlatform()
+//}
