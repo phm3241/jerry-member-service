@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- MyBatis Config -->
+<!-- https://mybatis.org/mybatis-3/ko/configuration.html -->
+<configuration>
+
+
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="autoMappingBehavior" value="FULL" />
+    </settings>
+
+
+
+    <!-- Aliase는 Mapper가 XML파일에서 사용되어지는 자바타입에 대한 짧은 별칭이다. -->
+    <!-- Aliase에 해당되는 클래스를 스캔하기 위한 패키지를 지정 -->
+    <typeAliases>
+        <package name="com.jerry.project.controller.member.param"/>
+        <package name="com.jerry.project.domain.member.model"/>
+    </typeAliases>
+
+    <typeHandlers>
+        <!-- java.sql.Timestamp 를 java.util.Date 형으로 반환 -->
+        <typeHandler javaType="java.util.Date" jdbcType="DATE" handler="org.apache.ibatis.type.DateTypeHandler" />
+        <typeHandler javaType="java.sql.Time" handler="org.apache.ibatis.type.DateTypeHandler"/>
+        <typeHandler javaType="java.sql.Timestamp" handler="org.apache.ibatis.type.DateTypeHandler"/>
+    </typeHandlers>
+
+</configuration>
