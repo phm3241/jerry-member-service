@@ -1,12 +1,14 @@
 package com.jerry.project.controller.member.param;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class MemberLoginParam {
 
     private String id;

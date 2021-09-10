@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
+@CrossOrigin("*")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class MemberController {
 
         // 세션이 없으면 홈으로 이동
         HttpSession session = request.getSession(false);
-        log.info(">>>>> checkLogin - session.getId() : {} ", session.getId());
+//        log.info(">>>>> checkLogin - session.getId() : {} ", session.getId());
 
         if (session == null) {
             return ResponseEntity.ok().body("session null");

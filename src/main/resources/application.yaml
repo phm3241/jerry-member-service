@@ -15,10 +15,10 @@ spring:
       # - error-logging
 
   datasource:
-#    username: hm
-#    password: ''
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/?serverTimezone=Asia/Seoul
+    username: hm
+    password: ''
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/?serverTimezone=Asia/Seoul
 
     hikari:
       connection-timeout: 5000
