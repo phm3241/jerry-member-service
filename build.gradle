@@ -36,8 +36,21 @@ repositories {
 // 특정버전을 명시하지 않아야만 맨위에 작성한 ${springBootVersion} 의 버전을 따라가게됨.
 // 라이브러리들의 버전관리가 한곳에 집중됨
 dependencies {
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+    runtimeOnly 'mysql:mysql-connector-java'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+
+
 }
 
 

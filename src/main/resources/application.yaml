@@ -1,0 +1,54 @@
+application:
+  version: 1.0.0
+  title: jerry-member-service
+
+server:
+  shutdown: "graceful"
+  port: 8080
+
+spring:
+  profiles:
+    active: test
+    include:
+      - console-logging
+      - file-logging
+      # - error-logging
+
+  datasource:
+#    username: hm
+#    password: ''
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/?serverTimezone=Asia/Seoul
+
+    hikari:
+      connection-timeout: 5000
+      validation-timeout: 1000
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-test-query: SELECT 1
+      auto-commit: false
+      transaction-isolation: TRANSACTION_READ_UNCOMMITTED
+
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  config-location: classpath:/mybatis-config.xml
+
+
+# https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-logging
+# logging.file >  .name, .path 두 가지 속성이 있는데, 둘 중에 하나만 써야 한다
+# 둘 다 쓰면 둘 다 싹 무시해서 로그파일이 생성되지 않는다.
+#  ${user.home}/logs
+logging:
+  file:
+    path: ./logs
+  level:
+    root: info
+    org.springframework.boot: warn
+    org.springframework.web: DEBUG
+    org.apache.ibatis: DEBUG
+    # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.jerry.product: DEBUG
+    # jdbc.sqlonly: DEBUG
+    # 특정 클래스에만 설정
+    # com.example.demo.SpringboottestApplication=debug
