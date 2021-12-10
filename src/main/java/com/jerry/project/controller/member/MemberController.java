@@ -34,7 +34,7 @@ public class MemberController {
 
         // commit 1-1
         // commit 2-1
-        // commit 3
+        // commit 3-1
         log.info(">>>>> checkLogin - request : {} ", request);
 
 
