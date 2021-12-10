@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jerry.project.domain.member.mapper.MemberMapper">
+
+
+    <!-- 회원 로그인 -->
+    <select id="getMembers" resultType="Member">
+        SELECT *
+        FROM ms.m_member;
+    </select>
+
+    <select id="chekLogin" resultType="Member">
+        SELECT *
+        FROM ms.m_member
+        WHERE id=#{id} and pw=#{pw}
+    </select>
+
+
+
+</mapper>
