@@ -33,6 +33,7 @@ public class MemberController {
     public ResponseEntity checkLogin(HttpServletRequest request) {
 
         // commit 1
+        // commit 2
         log.info(">>>>> checkLogin - request : {} ", request);
 
 
