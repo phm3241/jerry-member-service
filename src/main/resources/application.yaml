@@ -4,7 +4,7 @@ application:
 
 server:
   shutdown: "graceful"
-  port: 8080
+  port: 8090
 
 spring:
   profiles:
@@ -15,10 +15,10 @@ spring:
       # - error-logging
 
   datasource:
-    username: hm
-    password: ''
+    username: jerry
+    password: 'pw1234'
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/ms?serverTimezone=UTC&characterEncoding=UTF-8
 
     hikari:
       connection-timeout: 5000

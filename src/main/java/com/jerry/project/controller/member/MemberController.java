@@ -7,12 +7,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
-@CrossOrigin("*")
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -23,14 +29,20 @@ public class MemberController {
 
 
     @GetMapping("/checkLogin")
-//    public ResponseEntity loginCheck(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
-    public ResponseEntity loginCheck(HttpServletRequest request) {
+//    public ResponseEntity checkLogin(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
+    public ResponseEntity checkLogin(HttpServletRequest request) {
 
+        // commit 1
         log.info(">>>>> checkLogin - request : {} ", request);
+
+
+        Cookie[] c = request.getCookies();
+        log.info("cookie : {}", Arrays.toString(c));
 
         // 세션이 없으면 홈으로 이동
         HttpSession session = request.getSession(false);
-//        log.info(">>>>> checkLogin - session.getId() : {} ", session.getId());
+        String session1 = request.getHeader("session");
+        log.info(">>>>> checkLogin - session.getId() : {} ", session1);
 
         if (session == null) {
             return ResponseEntity.ok().body("session null");
@@ -49,13 +61,40 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Exception("로그인 상태가 아닙니다."));
         }
 
-        return ResponseEntity.ok().body(loginMember);
+//        return ResponseEntity.ok().body(loginMember);
+        return ResponseEntity.ok().body("/");
     }
 
 
 
-    @GetMapping("/login")
-    public ResponseEntity login(MemberLoginParam loginParam, HttpServletRequest request) {
+    /** cookie 설정 X */
+//    @PostMapping("/login")
+//    public ResponseEntity login(@RequestBody MemberLoginParam loginParam, HttpServletRequest request) throws Exception {
+//
+//        log.info(">>>>> loginParam : {}, request : {}", loginParam.toString(), request.toString());
+//
+//        Member loginMember = memberService.login(loginParam.getId(), loginParam.getPw());
+//        log.info(">>>>> loginMember : {}", loginMember);
+//
+//        if (loginMember == null) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Exception("loginFail - 아이디 또는 비밀번호가 맞지 않습니다."));
+//        }
+//
+//        // 로그인 성공 처리
+//        HttpSession session = request.getSession();                         // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 반환
+//
+//        session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);   // 세션에 로그인 회원 정보 보관
+//        log.info(">>>>> session.loginMember : {}", session.getAttribute("loginMember"));
+//        log.info(">>>>> session.getId() : {}", session.getId());
+//
+//        return ResponseEntity.ok().body(loginMember);
+//    }
+
+
+    /** cookie 설정 O */
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody MemberLoginParam loginParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
         log.info(">>>>> loginParam : {}, request : {}", loginParam.toString(), request.toString());
 
         Member loginMember = memberService.login(loginParam.getId(), loginParam.getPw());
@@ -67,14 +106,21 @@ public class MemberController {
 
         // 로그인 성공 처리
         HttpSession session = request.getSession();                         // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 반환
-        log.info(">>>>> session : {}", session.toString());
 
         session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);   // 세션에 로그인 회원 정보 보관
         log.info(">>>>> session.loginMember : {}", session.getAttribute("loginMember"));
         log.info(">>>>> session.getId() : {}", session.getId());
 
+//        response.setHeader("Set-Cookie", "JSESSIONID="+session.getId()+"; Secure; SameSite=None");
+//        response.setHeader("Set-Cookie", "JSESSIONID="+session.getId()+"; SameSite=None");
+        response.setHeader("Set-Cookie", "JSESSIONID="+session.getId()+"; SameSite=lax; Domain=http://localhost:3030; path=/;");
+        response.setHeader("Set-Cookie", "loginId="+loginMember.getId()+"; Domain=http://localhost:3030; path=/; httpOnly=true");
+
+
         return ResponseEntity.ok().body(loginMember);
     }
+
+
 
 //    @PostMapping("/logout")
 //    public String logout(HttpServletRequest request) {
