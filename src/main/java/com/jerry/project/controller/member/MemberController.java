@@ -32,9 +32,9 @@ public class MemberController {
 //    public ResponseEntity checkLogin(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember) {
     public ResponseEntity checkLogin(HttpServletRequest request) {
 
-        // commit 1
-        // commit 2
-        // commit 3
+        // commit 1-1
+        // commit 2-1
+        // commit 3-1
         log.info(">>>>> checkLogin - request : {} ", request);
 
 
